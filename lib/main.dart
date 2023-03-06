@@ -4,9 +4,9 @@ import 'package:omni_datetime_picker/omni_datetime_picker.dart';
 import 'services/date_service.dart';
 import 'services/notification_service.dart';
 
-void main() {
+Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  NotificationService().initializeNotification();
+  await NotificationService().initializeNotification();
 
   runApp(const MyApp());
 }
@@ -125,9 +125,9 @@ class _MyHomePageState extends State<MyHomePage> {
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: DateAndTimeService.ShowDateAndTimePicker,
+        onPressed: selectNotificationTime,
         tooltip: 'Increment',
-        child: Icon(Icons.add),
+        child: const Icon(Icons.add),
       ), // This trailing comma makes auto-formatting nicer for build methods.
     );
   }
