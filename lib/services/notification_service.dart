@@ -9,8 +9,8 @@ class NotificationService {
   Future<void> initializeNotification() async {
     const AndroidInitializationSettings initializationSettingsAndroid =
         AndroidInitializationSettings('@mipmap/ic_launcher');
-    const IOSInitializationSettings initializationSettingsIOS =
-        IOSInitializationSettings(
+    const DarwinInitializationSettings initializationSettingsIOS =
+        DarwinInitializationSettings(
       requestAlertPermission: false,
       requestBadgePermission: false,
       requestSoundPermission: false,
@@ -23,9 +23,12 @@ class NotificationService {
     await flutterLocalNotificationsPlugin.initialize(initializationSettings);
   }
 
-  Future<void> showNotification(int id, String title, String body) async {
-    var dateTime = DateTime(DateTime.now().year, DateTime.now().month,
-        DateTime.now().day, 08, 50, 0, 0, 0);
+  Future<void> showNotification(
+      {required int id,
+      required String title,
+      required String body,
+      required DateTime time}) async {
+    final dateTime = time;
     tz.initializeTimeZones();
     await flutterLocalNotificationsPlugin.zonedSchedule(
       id,
@@ -33,11 +36,11 @@ class NotificationService {
       body,
       tz.TZDateTime.from(dateTime, tz.local),
       NotificationDetails(
-        android: AndroidNotificationDetails(id.toString(), 'Go To Bed',
+        android: AndroidNotificationDetails(id.toString(), 'any',
             importance: Importance.max,
             priority: Priority.max,
             icon: '@mipmap/ic_launcher'),
-        iOS: const IOSNotificationDetails(
+        iOS: const DarwinNotificationDetails(
           sound: 'default.wav',
           presentAlert: true,
           presentBadge: true,
